@@ -1,6 +1,8 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Text;
+using System.IO;
+using System.Linq;
 
 namespace GoogleInterviewParenthathese
 {
@@ -45,7 +47,6 @@ namespace GoogleInterviewParenthathese
                 start1 = temp1 + 1;
             }
         }
-        // enter characters in pairs in the array like '(',')','[',']'
         public bool CheckParenthMatch(string input, char[] characters)
         {
             for(int i = 0; i< characters.Length;i+=2)
@@ -55,7 +56,7 @@ namespace GoogleInterviewParenthathese
                 while (true)
                 {
                     int temp = FindChar(input, characters[i], start);
-                    int temp1 = FindChar(input, characters[i + 1], start1);
+                    int temp1 = FindChar(input, characters[i+1], start1);
                     // can't find (
                     if (temp == -1)
                     {
@@ -79,6 +80,58 @@ namespace GoogleInterviewParenthathese
             }
             return true;
 
+        }
+        public int Findpair(List<char> input, char elem1, char elem2)
+        {
+            for(int i = 0; i < input.Count-1; i++)
+            {
+                if(input[i] == elem1 && input[i + 1] == elem2)
+                {
+                    return i;
+                }
+            }
+            return -1;
+        }
+        public List<char> CreateNeededElemOnly(string input, char[]brackets)
+        {
+            List<char> fin = new List<char>();
+            foreach(var item in input)
+            {
+                if(brackets.Contains(item))
+                {
+                    fin.Add(item);
+                }
+            }
+            return fin;
+        }
+        public bool CheckParenthMathc(string input, char[]brackets)
+        {
+            var copy = CreateNeededElemOnly(input, brackets);
+            
+            while(true)
+            {
+                bool havePairs = false;
+                for (int i = 0; i < brackets.Length; i+=2)
+                {
+                    int cur = Findpair(copy, brackets[i], brackets[i + 1]);
+                    // pair is foud
+                    if(cur > -1)
+                    {
+                        havePairs = true;
+                        copy.RemoveAt(cur);
+                        copy.RemoveAt(cur);
+                    }
+                }
+                if(!havePairs && copy.Count==0)
+                {
+                    return true;
+                }
+                else if(!havePairs && copy.Count!=0)
+                {
+                    return false;
+                }
+                
+            }
         }
     }
 }
