@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 
 namespace GoogleInterviewParenthathese
 {
@@ -7,10 +7,13 @@ namespace GoogleInterviewParenthathese
         static void Main(string[] args)
         {
             string iput;
-            
+            Console.WriteLine("enter the line");
             iput = Console.ReadLine();
+            Console.WriteLine("enter the brackets");
+            string checks = Console.ReadLine();
+            char[] charChecks = checks.ToCharArray();
             var res = new ParenthMatch();
-            if(res.CheckParenthMatch(iput))
+            if(res.CheckParenthMathc(iput,charChecks))
             {
                 Console.WriteLine("works");
             }
