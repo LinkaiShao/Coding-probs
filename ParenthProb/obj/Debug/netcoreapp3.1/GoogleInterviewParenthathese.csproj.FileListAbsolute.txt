@@ -1,0 +1,13 @@
+C:\Users\linka\OneDrive\Desktop\Code\GoogleInterviewParenthathese\bin\Debug\netcoreapp3.1\GoogleInterviewParenthathese.exe
+C:\Users\linka\OneDrive\Desktop\Code\GoogleInterviewParenthathese\bin\Debug\netcoreapp3.1\GoogleInterviewParenthathese.deps.json
+C:\Users\linka\OneDrive\Desktop\Code\GoogleInterviewParenthathese\bin\Debug\netcoreapp3.1\GoogleInterviewParenthathese.runtimeconfig.json
+C:\Users\linka\OneDrive\Desktop\Code\GoogleInterviewParenthathese\bin\Debug\netcoreapp3.1\GoogleInterviewParenthathese.runtimeconfig.dev.json
+C:\Users\linka\OneDrive\Desktop\Code\GoogleInterviewParenthathese\bin\Debug\netcoreapp3.1\GoogleInterviewParenthathese.dll
+C:\Users\linka\OneDrive\Desktop\Code\GoogleInterviewParenthathese\bin\Debug\netcoreapp3.1\GoogleInterviewParenthathese.pdb
+C:\Users\linka\OneDrive\Desktop\Code\GoogleInterviewParenthathese\obj\Debug\netcoreapp3.1\GoogleInterviewParenthathese.csprojAssemblyReference.cache
+C:\Users\linka\OneDrive\Desktop\Code\GoogleInterviewParenthathese\obj\Debug\netcoreapp3.1\GoogleInterviewParenthathese.AssemblyInfoInputs.cache
+C:\Users\linka\OneDrive\Desktop\Code\GoogleInterviewParenthathese\obj\Debug\netcoreapp3.1\GoogleInterviewParenthathese.AssemblyInfo.cs
+C:\Users\linka\OneDrive\Desktop\Code\GoogleInterviewParenthathese\obj\Debug\netcoreapp3.1\GoogleInterviewParenthathese.csproj.CoreCompileInputs.cache
+C:\Users\linka\OneDrive\Desktop\Code\GoogleInterviewParenthathese\obj\Debug\netcoreapp3.1\GoogleInterviewParenthathese.dll
+C:\Users\linka\OneDrive\Desktop\Code\GoogleInterviewParenthathese\obj\Debug\netcoreapp3.1\GoogleInterviewParenthathese.pdb
+C:\Users\linka\OneDrive\Desktop\Code\GoogleInterviewParenthathese\obj\Debug\netcoreapp3.1\GoogleInterviewParenthathese.genruntimeconfig.cache
