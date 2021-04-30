@@ -48,7 +48,7 @@ namespace GoogleInterviewParenthathese
         // enter characters in pairs in the array like '(',')','[',']'
         public bool CheckParenthMatch(string input, char[] characters)
         {
-            for(int i = 0; i< characters.Length;i+2)
+            for(int i = 0; i< characters.Length;i+=2)
             {
                 int start = 0;
                 int start1 = 0;
