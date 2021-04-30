@@ -81,7 +81,8 @@ namespace GoogleInterviewParenthathese
             return true;
 
         }
-        public int Findpair(List<char> input, char elem1, char elem2)
+        // new function 
+        private int Findpair(List<char> input, char elem1, char elem2)
         {
             for(int i = 0; i < input.Count-1; i++)
             {
@@ -92,7 +93,8 @@ namespace GoogleInterviewParenthathese
             }
             return -1;
         }
-        public List<char> CreateNeededElemOnly(string input, char[]brackets)
+        // brackets are represented as ()[]{}
+        private List<char> CreateNeededElemOnly(string input, char[]brackets)
         {
             List<char> fin = new List<char>();
             foreach(var item in input)
@@ -104,6 +106,7 @@ namespace GoogleInterviewParenthathese
             }
             return fin;
         }
+        // look at this function
         public bool CheckParenthMathc(string input, char[]brackets)
         {
             var copy = CreateNeededElemOnly(input, brackets);
