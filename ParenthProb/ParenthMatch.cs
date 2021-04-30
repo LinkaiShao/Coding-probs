@@ -45,16 +45,17 @@ namespace GoogleInterviewParenthathese
                 start1 = temp1 + 1;
             }
         }
+        // enter characters in pairs in the array like '(',')','[',']'
         public bool CheckParenthMatch(string input, char[] characters)
         {
-            for(int i = 0; i< characters.Length;i++)
+            for(int i = 0; i< characters.Length;i+2)
             {
                 int start = 0;
                 int start1 = 0;
                 while (true)
                 {
                     int temp = FindChar(input, characters[i], start);
-                    int temp1 = FindChar(input, characters[i], start1);
+                    int temp1 = FindChar(input, characters[i + 1], start1);
                     // can't find (
                     if (temp == -1)
                     {
