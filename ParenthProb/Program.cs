@@ -1,26 +1,32 @@
 using System;
-
+using System.Collections;
+using System.Collections.Generic;
 namespace GoogleInterviewParenthathese
 {
     class Program
     {
         static void Main(string[] args)
         {
-            string iput;
-            Console.WriteLine("enter the line");
-            iput = Console.ReadLine();
-            Console.WriteLine("enter the brackets");
-            string checks = Console.ReadLine();
-            char[] charChecks = checks.ToCharArray();
-            var res = new ParenthMatch();
-            if(res.CheckParenthMathc(iput,charChecks))
+            string input;
+            Console.WriteLine("type in the expresison");
+            input = Console.ReadLine();
+            string input1;
+            Console.WriteLine("type in the grouping characters");
+            input1 = Console.ReadLine();
+            Dictionary<char, char> pairs = new Dictionary<char, char>();
+            for(int i = 0; i < input1.Length; i+=2)
+            {
+                pairs.Add(input1[i], input1[i + 1]);
+            }
+            if(TheRightSolution.CheckMultipleParenth(input,pairs))
             {
                 Console.WriteLine("works");
             }
             else
             {
-                Console.WriteLine("doesn't work");
+                Console.WriteLine("don't work");
             }
+            
         }
     }
 }
