@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -12,7 +12,7 @@ namespace ArithCalcV2
             rightSymbolPos = expression.Length;
             // find the symbols to the left and right 
             // left
-            for (int j = 0; j < centerSymbolPosition; j++)
+            for (int j = centerSymbolPosition -1 ; j > -1; j--)
             {
                 if (expression[j] == '+' || expression[j] == '-' || expression[j] == '*' || expression[j] == '/')
                 {
@@ -30,7 +30,7 @@ namespace ArithCalcV2
                 }
             }
             // find the numbers which should be between the left right symbol and the center symbol
-            // if there is no more left symbol then left symbol was initialized at 0
+            // if there is no more left symbol then left symbol was initialized at -1
             // if there is no more right ysmbols then right symbol is automatically the last thing in the expression string
             leftNum = double.Parse(expression.Substring(leftSymbolPos + 1, centerSymbolPosition - leftSymbolPos - 1));
             rightNum = double.Parse(expression.Substring(centerSymbolPosition + 1, rightSymbolPos - centerSymbolPosition - 1));
