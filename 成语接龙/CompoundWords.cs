@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Text;
 using System.IO;
@@ -69,18 +69,21 @@ namespace CompoundWords
         {
             List<string> longestPath = new List<string>();
             List<string> tempPath = new List<string>();
-            for (int i = 0; i < WordsByHead[startingCompoundWord[3]].contents.Count; i++)
+            if (WordsByHead.ContainsKey(startingCompoundWord[3]))
             {
-                if (WordsByHead.ContainsKey(startingCompoundWord[3]))
+                for (int i = 0; i < WordsByHead[startingCompoundWord[3]].contents.Count; i++)
                 {
-                    string usedCompound = WordsByHead[startingCompoundWord[3]].contents[i];
-                    WordsByHead[startingCompoundWord[3]].contents.RemoveAt(i);
-                    tempPath = FindLongestPath(usedCompound);
-                    WordsByHead[startingCompoundWord[3]].contents.Insert(i, usedCompound);
-                }
-                if(tempPath.Count> longestPath.Count)
-                {
-                    longestPath = tempPath;
+                    if (WordsByHead.ContainsKey(startingCompoundWord[3]))
+                    {
+                        string usedCompound = WordsByHead[startingCompoundWord[3]].contents[i];
+                        WordsByHead[startingCompoundWord[3]].contents.RemoveAt(i);
+                        tempPath = FindLongestPath(usedCompound);
+                        WordsByHead[startingCompoundWord[3]].contents.Insert(i, usedCompound);
+                    }
+                    if (tempPath.Count > longestPath.Count)
+                    {
+                        longestPath = tempPath;
+                    }
                 }
             }
             longestPath.Insert(0, startingCompoundWord);
@@ -92,6 +95,7 @@ namespace CompoundWords
             List<string> results = new List<string>();
             List<string> longestResults = new List<string>();
             bool success = FindListOfRes(startingCompound[3], length, results);
+            results.Insert(0, startingCompound);
             if (!success)
             {
                 longestResults = FindLongestPath(startingCompound);
