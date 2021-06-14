@@ -73,13 +73,44 @@ namespace CompoundWords
             {
                 for (int i = 0; i < WordsByHead[startingCompoundWord[3]].contents.Count; i++)
                 {
-                    if (WordsByHead.ContainsKey(startingCompoundWord[3]))
+                 
+                    string usedCompound = WordsByHead[startingCompoundWord[3]].contents[i];
+                    WordsByHead[startingCompoundWord[3]].contents.RemoveAt(i);
+                    tempPath = FindLongestPath(usedCompound);
+                    WordsByHead[startingCompoundWord[3]].contents.Insert(i, usedCompound);
+                    if (tempPath.Count > longestPath.Count)
                     {
-                        string usedCompound = WordsByHead[startingCompoundWord[3]].contents[i];
-                        WordsByHead[startingCompoundWord[3]].contents.RemoveAt(i);
-                        tempPath = FindLongestPath(usedCompound);
-                        WordsByHead[startingCompoundWord[3]].contents.Insert(i, usedCompound);
+                        longestPath = tempPath;
                     }
+                }
+            }
+            longestPath.Insert(0, startingCompoundWord);
+            return longestPath;
+        }
+        /// <summary>
+        ///  same as find longest path but returns if the length is equals to required
+        /// </summary>
+        /// <param name="startingCompoundWord"></param>
+        /// <param name="length"></param>
+        /// <returns></returns>
+        public List<string> FindPathv2 (string startingCompoundWord, int length)
+        {
+            List<string> longestPath = new List<string>();
+            List<string> tempPath = new List<string>();
+            if(length == 0)
+            {
+                longestPath.Insert(0, startingCompoundWord);
+                return longestPath;
+            }
+            if (WordsByHead.ContainsKey(startingCompoundWord[3]))
+            {
+                for (int i = 0; i < WordsByHead[startingCompoundWord[3]].contents.Count; i++)
+                {
+
+                    string usedCompound = WordsByHead[startingCompoundWord[3]].contents[i];
+                    WordsByHead[startingCompoundWord[3]].contents.RemoveAt(i);
+                    tempPath = FindPathv2(usedCompound, length-1);
+                    WordsByHead[startingCompoundWord[3]].contents.Insert(i, usedCompound);
                     if (tempPath.Count > longestPath.Count)
                     {
                         longestPath = tempPath;
