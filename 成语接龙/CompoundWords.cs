@@ -93,12 +93,13 @@ namespace CompoundWords
         /// <param name="startingCompoundWord"></param>
         /// <param name="length"></param>
         /// <returns></returns>
-        public List<string> FindPathv2 (string startingCompoundWord, int length)
+        public List<string> FindPathv2 (string startingCompoundWord, int length, out bool success)
         {
             List<string> longestPath = new List<string>();
             List<string> tempPath = new List<string>();
             if(length == 0)
             {
+                success = true;
                 longestPath.Insert(0, startingCompoundWord);
                 return longestPath;
             }
@@ -109,8 +110,13 @@ namespace CompoundWords
 
                     string usedCompound = WordsByHead[startingCompoundWord[3]].contents[i];
                     WordsByHead[startingCompoundWord[3]].contents.RemoveAt(i);
-                    tempPath = FindPathv2(usedCompound, length-1);
+                    tempPath = FindPathv2(usedCompound, length-1,out success);
                     WordsByHead[startingCompoundWord[3]].contents.Insert(i, usedCompound);
+                    if (success)
+                    {
+                        longestPath.Insert(0, startingCompoundWord); // have found the length path 
+                        return longestPath;
+                    }
                     if (tempPath.Count > longestPath.Count)
                     {
                         longestPath = tempPath;
@@ -118,6 +124,7 @@ namespace CompoundWords
                 }
             }
             longestPath.Insert(0, startingCompoundWord);
+            success = false; // have not found the length path
             return longestPath;
         }
         public List<string> Run(string startingCompound, int length)
