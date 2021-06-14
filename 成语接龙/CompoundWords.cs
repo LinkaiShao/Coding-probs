@@ -127,6 +127,14 @@ namespace CompoundWords
             success = false; // have not found the length path
             return longestPath;
         }
+        public List<string> Runv2(string startingCompound, int length)
+        {
+            bool success = false;
+            List<string> results = new List<string>();
+            results = FindPathv2(startingCompound, length, out success);
+            return results;
+
+        }
         public List<string> Run(string startingCompound, int length)
         {
             Console.OutputEncoding = Encoding.Unicode;
