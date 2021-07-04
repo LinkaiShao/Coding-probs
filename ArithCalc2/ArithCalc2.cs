@@ -5,14 +5,32 @@ using System.Text;
 namespace ArithCalcV2
 {
 
-    internal static class ArithCalcv2
+    public static class ArithCalcv2
     {
         public static double Run(string input)
         {
+            string orig = input;
             string nonspace;
-            ValidateInput(input, out nonspace);
-            return Calc(input);
+            try
+            {
+                ValidateInput(input, out nonspace);
+                return Calc(input, orig);
+            }
+            catch (ArgumentException ex)
+            {
+                Console.Error.WriteLine($"error, {ex.Message}. try again");
+            }
+            catch(Exception other)
+            {
+                Console.Error.WriteLine("i dont know what is going on");
+            }
+            return 0;
+            
         }
+        // validation of input
+        // before every arithmatic needs to be a number or right parenth )
+        // needs ( or number after arithmatic
+        // weird letters are also sources of error
         private static bool ValidateInput(string input, out string nonSpace)
         {
             List<char>nonSpaceInput = new List<char>();
@@ -38,14 +56,12 @@ namespace ArithCalcV2
                 {
                     // prior to arith has to be either right ) or num
                     if (cur != "rightP"||cur != "num") {
-                        Console.WriteLine("error occurs at position, need either number of ) before arithmatic {0}", i);
-                        nonSpace = "";
+                        throw new WrongPresentationException($"wrong presentation by the user, at position {i} of {input}", input, i);
                         return false;
                     }
                     char temp = input[i + 1];
                     if (temp!= '(' || !char.IsNumber(temp)){
-                        nonSpace = "";
-                        Console.WriteLine("error occurs at position, need either number of ( after arithmatic {0}", i);
+                        throw new WrongPresentationException($"wrong presentation by the user, at position {i} of {input}", input, i);
                         return false;
                     }
                     nonSpaceInput.Add(input[i]);
@@ -53,8 +69,7 @@ namespace ArithCalcV2
                 }
                 else if (input[i]!=' ')
                 {
-                    nonSpace = "";
-                    Console.WriteLine("error occurs at position {0}, strange letter found", i);
+                    throw new StrangeCharacterException($"strange character {input[i]}appears at location {i} of your input {input}", input, input[i], i);
                     return false;
                 }
             }
@@ -89,7 +104,7 @@ namespace ArithCalcV2
             return item1 / item2;
         }
         // this one supports () as first priority then */, similar to a normal calculator
-        private static double Calc(string expression)
+        private static double Calc(string expression, string originalInput)
         {
             // handle the things inside of () first then */ then +-
             // find the deepest level parenth
@@ -130,13 +145,11 @@ namespace ArithCalcV2
                 // extra right parenth when there are no left parenth present
                 if (expression.Contains(')'))
                 {
-                    Console.WriteLine("left and right parenth don't match, more right parenth than left parenth, exiting program");
-                    System.Environment.Exit(0);
+                    throw new ParenthNotMatchException($"left and right parenth don't match, more right parenth than left parenth of user input {originalInput}", originalInput);
                 }
                 if (expression.Contains('('))
                 {
-                    Console.WriteLine("left and right parenth don't match, more left parenth than left parenth, exiting program");
-                    System.Environment.Exit(0);
+                    throw new ParenthNotMatchException($"left and right parenth don't match, more left parenth than right parenth of user input {originalInput}", originalInput);
                 }
                 return SimpleCalc.Calc(expression);
             }
@@ -147,7 +160,7 @@ namespace ArithCalcV2
             // get rid of the parenth
             string leftPart = expression.Substring(0, leftParenthStart);
             string rightPart = expression.Substring(rightParenthStart + 1, expression.Length - rightParenthStart - 1);
-            return Calc(leftPart + insideValue.ToString() + rightPart);
+            return Calc(leftPart + insideValue.ToString() + rightPart, originalInput);
         }
     }
 }
