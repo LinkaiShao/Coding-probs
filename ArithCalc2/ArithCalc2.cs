@@ -37,22 +37,23 @@ namespace ArithCalcV2
             string cur = "";
             for(int i = 0; i < input.Length; i++)
             {
-                if (input[i] == '(')
+                var thisItem = input[i];
+                if (thisItem == '(')
                 {
                     cur = "leftP";
-                    nonSpaceInput.Add(input[i]);
+                    nonSpaceInput.Add(thisItem);
                 }
-                else if (input[i] == ')')
+                else if (thisItem == ')')
                 {
                     cur = "rightP";
-                    nonSpaceInput.Add(input[i]);
+                    nonSpaceInput.Add(thisItem);
                 }
-                else if (char.IsNumber(input[i]))
+                else if (char.IsNumber(thisItem))
                 {
                     cur = "num";
-                    nonSpaceInput.Add(input[i]);
+                    nonSpaceInput.Add(thisItem);
                 }
-                else if (input[i] == '+' || input[i] == '-' || input[i] == '*' || input[i] == '/')
+                else if (thisItem == '+' || thisItem == '-' || thisItem == '*' || thisItem == '/')
                 {
                     // prior to arith has to be either right ) or num
                     if (cur != "rightP"||cur != "num") {
@@ -64,12 +65,12 @@ namespace ArithCalcV2
                         throw new WrongPresentationException($"wrong presentation by the user, at position {i} of {input}", input, i);
                         return false;
                     }
-                    nonSpaceInput.Add(input[i]);
+                    nonSpaceInput.Add(thisItem);
                     cur = "arith";
                 }
-                else if (input[i]!=' ')
+                else if (thisItem !=' ')
                 {
-                    throw new StrangeCharacterException($"strange character {input[i]}appears at location {i} of your input {input}", input, input[i], i);
+                    throw new StrangeCharacterException($"strange character {input[i]}appears at location {i} of your input {input}", input, thisItem, i);
                     return false;
                 }
             }
@@ -120,11 +121,12 @@ namespace ArithCalcV2
                     // for this level to be the deepest level parenth, left parenth ( needs to match with a right parenth without any left parenth in the middle
                     for (int j = i + 1; j < expression.Length; j++)
                     {
-                        if (expression[j] == '(')
+                        var expJ = expression[j];
+                        if (expJ == '(')
                         {
                             break;
                         }
-                        if (expression[j] == ')')
+                        if (expJ == ')')
                         {
                             deepest = true;
                             rightParenthStart = j;
