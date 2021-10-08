@@ -1,6 +1,5 @@
 // Program1.cpp : This file contains the 'main' function. Program execution begins and ends there.
 //
-#pragma once
 #include <iostream>
 #include <fstream>
 #include <vector>
@@ -35,13 +34,13 @@ void ArgsHandling(int argc, char* argv[]);
 /// </summary>
 /// <param name="allBooks"></param>
 /// <param name="requested"></param>
-void BinarySearch(vector<Book> allBooks, vector<Book> requested, ofstream& resultFile);
+void BinarySearch(vector<Book> allBooks, vector<Book> requested, string resultFile);
 /// <summary>
 /// Linear search for the requested books
 /// </summary>
 /// <param name="allBooks"></param>
 /// <param name="requested"></param>
-void LinearSearch(vector<Book> allBooks, vector<Book> requested, ofstream& resultFile);
+void LinearSearch(vector<Book> allBooks, vector<Book> requested, string resultFile);
 void RunProgram(int argc, char *argv[]);
 /// <summary>
 /// 3 argvs, one for new, one for request, one for result
@@ -51,9 +50,7 @@ void RunProgram(int argc, char *argv[]);
 /// <returns></returns>
 int main(int argc, char *argv[])
 {
-    vector<Book> ans = ReadFile("C:\\Users\\linka\\OneDrive\\Desktop\\Prog1Test.dat");
-    SortBooks(ans);
-    std::cout << "Hello World!\n";
+    RunProgram(argc, argv);
 }
 void RunProgram(int argc, char* argv[])
 {
@@ -70,6 +67,20 @@ void RunProgram(int argc, char* argv[])
         cout << "Error: cannot open file " << resultsPath << "\n";
         exit(0);
     }
+    char userInput = ReadUserInput();
+    // the files are read correctly, now do the sort
+    switch (userInput)
+    {
+    case 'l':
+        LinearSearch(allBooks, allRequests, resultsPath);
+        break;
+    case 'b':
+        BinarySearch(allBooks, allRequests, resultsPath);
+        break;
+    default:
+        break;
+    }
+    
     
 }
 void ArgsHandling(int argc, char* argv[])
@@ -77,9 +88,10 @@ void ArgsHandling(int argc, char* argv[])
     if (argc != 4) 
     {
         cout << "Usage: .SearchNewBooks <newBooks.dat> <request.dat> <result_file.dat>\n";
+        exit(0);
     }
 }
-void BinarySearch(vector<Book> allBooks, vector<Book> requested, ofstream& resultFile)
+void BinarySearch(vector<Book> allBooks, vector<Book> requested, string resultFile)
 {
     chrono::high_resolution_clock::time_point start;
     start = chrono::high_resolution_clock::now();
@@ -110,18 +122,20 @@ void BinarySearch(vector<Book> allBooks, vector<Book> requested, ofstream& resul
     }
     auto end = chrono::high_resolution_clock::now();
     double elapsed_us = std::chrono::duration<double, std::micro>(end - start).count();
-    std::cout << "CPU time: " << elapsed_us << " microseconds";
-    resultFile << totalFound;
+    std::cout << "CPU time: " << elapsed_us << " microseconds\n";
+    ofstream resFile(resultFile);
+    resFile << totalFound;
+    resFile.close();
     return;
 }
-void LinearSearch(vector<Book> allBooks, vector<Book> requested, ofstream& resultFile)
+void LinearSearch(vector<Book> allBooks, vector<Book> requested, string resultFile)
 {
     chrono::high_resolution_clock::time_point start;
     start = chrono::high_resolution_clock::now();
     int totalFound = 0;
     for (int i = 0; i < (int)requested.size(); i++)
     {
-        for (int j = 0; j < (int)allBooks.size(); i++) 
+        for (int j = 0; j < (int)allBooks.size(); j++) 
         {
             if (requested[i] == allBooks[j]) // found
             {
@@ -132,8 +146,10 @@ void LinearSearch(vector<Book> allBooks, vector<Book> requested, ofstream& resul
     }
     auto end = chrono::high_resolution_clock::now();
     double elapsed_us = std::chrono::duration<double, std::micro>(end - start).count();
-    std::cout << "CPU time: " << elapsed_us << " microseconds";
-    resultFile << totalFound;
+    std::cout << "CPU time: " << elapsed_us << " microseconds\n";
+    ofstream resFile(resultFile);
+    resFile << totalFound;
+    resFile.close();
     return;
 }
 void SortBooks(vector<Book>& input)
@@ -142,7 +158,6 @@ void SortBooks(vector<Book>& input)
 }
 char ReadUserInput()
 {
-    char final; // unit to return
     std::cout << "Choice of search method([l]inear, [b]inary)?\n";
     while (true)
     {
@@ -160,7 +175,7 @@ char ReadUserInput()
         }
         cout << "Incorrect choice\n";
     }
-    return NULL;
+    return ' ';
 }
 vector<Book> ReadFile(string input)
 {
@@ -176,9 +191,12 @@ vector<Book> ReadFile(string input)
     string line;
     string curString;
     vector<Book> final;
-    while (getline(stream,line)) // read an entire line
+    while (getline(stream, line)) // read an entire line
     {
         stringstream ss(line);
+        if (line == "") {
+            break;
+        }
         getline(ss,curString,',');
         isbnNumber = stoi(curString);
         getline(ss, bookLanguage, ',');

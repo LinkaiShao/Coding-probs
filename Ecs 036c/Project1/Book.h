@@ -1,4 +1,4 @@
-#pragma once
+
 #ifndef Program1_Book_H
 #define Program1_Book_H
 #include <string>

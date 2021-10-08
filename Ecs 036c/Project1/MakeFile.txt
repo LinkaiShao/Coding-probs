@@ -1,0 +1,4 @@
+SearchNewBooks: SearchNewBooks.cc Book.h
+				g++ -Wall -Werror -o $@ $^
+Clean:
+		rm *.dat SearchNewBooks
